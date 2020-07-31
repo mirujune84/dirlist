@@ -1,0 +1,79 @@
+{% extends "layouts/app.twig" %}
+
+{% block content %}
+    {% include "components/header.twig" %}
+
+    <div id="content" class="flex flex-col flex-grow container mx-auto px-4">
+        {% if is_login is not empty %}
+          <div class="my-2">
+              <div class="flex justify-between font-bold p-2">
+                  <div class="flex-grow font-mono mr-2">
+                      {{ translate('file.name') }}
+                  </div>
+
+                  <div class="font-mono text-right w-1/6 mx-2 hidden sm:block">
+                      {{ translate('file.size') }}
+                  </di31
+
+                  <div class="font-mono text-right w-1/4 ml-2 hidden sm:block">
+                      {{ translate('file.date') }}
+                  </div>
+              </div>
+
+              <ul id="file-list">
+                  <li>
+                      {% if path and path != '.' %}
+                          {{ include('components/file.twig', { parentDir: true }) }}
+                      {% endif %}
+                  </li>
+
+                  <li>
+                      {% for file in files %}
+                          {{ include('components/file.twig') }}
+                      {% endfor %}
+                  </li>
+              </ul>
+          </div>
+
+          {% if readme %}
+              {% include 'components/readme.twig' %}
+          {% endif %}
+        {% else %}
+          <div id="login-info-dialogue" class="transition duration-500 ease-in-out bg-white rounded-lg shadow-lg overflow-hidden" style="margin:20px auto 0;min-width:300px;">
+              <header class="flex justify-between items-center bg-blue-600 p-4">
+                  <i class="fas fa-sign-in-alt fa-lg text-white"></i>
+                  <div class="items-center text-xl text-white font-mono mx-4">Login</div>
+                  <button class="flex justify-center items-center rounded-full w-6 h-6 text-blue-900 text-sm hover:bg-red-700 hover:text-white hover:shadow"><i class="fas fa-times"></i></button>
+              </header>
+              <content class="flex justify-center items-center p-4">
+                  <div class="overflow-x-auto">
+                    <form action="./" method="GET">
+                      <table class="table-auto">
+                          <tr>
+                              <td class="font-mono px-4 py-2"><input type="text" name="username" value="{{ username }}" placeholder="Username" /></td>
+                          </tr>
+                          <tr>
+                              <td class="font-mono px-4 py-2"><input type="password" name="password" value="{{ password }}" placeholder="Password" /></td>
+                          </tr>
+                          <tr>
+                              <td class="font-mono px-4 py-2 text-sm text-right">
+                                  {% if err %}
+                                    <span class="text-left fa-pull-left" style="color:red;margin:8px 0 0;">{{ err }}</span>
+                                  {% endif %}
+                                  <button type="submit" name="submit" style="color:#FFF;" class="rounded bg-blue-600 hover:text-white hover:shadow">Login</button>
+                              </td>
+                          </tr>
+                      </table>
+                    </form>
+                  </div>
+              </content>
+            </div>
+        {% endif %}
+    </div>
+
+    {% include 'components/footer.twig' %}
+
+    {% include 'components/scroll-to-top.twig' %}
+        
+      <file-info-modal ref="fileInfoModal"></file-info-modal>
+  {% endblock %}
