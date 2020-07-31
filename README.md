@@ -1,5 +1,5 @@
 # dirlist index.php file
-
+```
 <?php
 use App\Bootstrap\AppManager;
 use DI\ContainerBuilder;
@@ -28,3 +28,4 @@ if (isset($_GET['showdir'])) {
   // Engage!
   $app->run();
 }
+```
