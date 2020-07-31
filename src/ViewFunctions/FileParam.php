@@ -14,7 +14,7 @@ class FileParam extends ViewFunction
      *
      * @return string
      */
-    public function __invoke(string $file): string
+    public function __invoke($file): string
     {
         return substr(sprintf('%o', fileperms($file)), -4) . (fileowner($file)? '  ' . fileowner($file):'');
     }
